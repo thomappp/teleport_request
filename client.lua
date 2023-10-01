@@ -33,7 +33,7 @@ AddEventHandler("teleport_script:tpa", function(player)
     if request ~= nil then
         TriggerServerEvent("teleport_script:tp_cannot_teleport", player.id)
     elseif request == nil then
-		request = player
+	request = player
         setCoolDown()
         TriggerServerEvent("teleport_script:tp_can_teleport", player.id)
     end
