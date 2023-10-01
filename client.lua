@@ -12,16 +12,16 @@ AddEventHandler("teleport_script:notification", function(text)
     DrawNotification(true, true)
 end)
 
-AddEventHandler("teleport_script:chat_notification", function(text)
-	TriggerEvent("chat:addMessage", {
-		color = { 18, 197, 101 },
-		multiline = true,
-		args = { "Téléportation", text }
-	})
+AddEventHandler("teleport_script:chat_notification", function(text)	
+    TriggerEvent("chat:addMessage", {
+	color = { 18, 197, 101 },
+	multiline = true,
+	args = { "Téléportation", text }
+    })
 end)
 
 local setCoolDown = function()
-	SetTimeout(3000 * 60, function()
+    SetTimeout(3000 * 60, function()
         if request ~= nil then
             TriggerServerEvent("teleport_script:tp_downed", request.id)
             request = nil
@@ -32,11 +32,11 @@ end
 AddEventHandler("teleport_script:tpa", function(player)
     if request ~= nil then
         TriggerServerEvent("teleport_script:tp_cannot_teleport", player.id)
-   	elseif request == nil then
+    elseif request == nil then
 		request = player
         setCoolDown()
         TriggerServerEvent("teleport_script:tp_can_teleport", player.id)
-	end
+    end
 end)
 
 AddEventHandler("teleport_script:tp_accept", function()
@@ -44,16 +44,16 @@ AddEventHandler("teleport_script:tp_accept", function()
         local playerCoords = GetEntityCoords(PlayerPedId())
         TriggerServerEvent("teleport_script:tp_accepted", request.id, playerCoords)
         request = nil
-   	elseif request == nil then
+    elseif request == nil then
         TriggerEvent("teleport_script:chat_notification", "Vous n'avez pas de demande en cours.")
-	end
+    end
 end)
 
 AddEventHandler("teleport_script:tp_deny", function()
     if request ~= nil then
         TriggerServerEvent("teleport_script:tp_denied", request.id)
         request = nil
-   	elseif request == nil then
+    elseif request == nil then
         TriggerEvent("teleport_script:chat_notification", "Vous n'avez pas de demande en cours.")
-	end
+    end
 end)
